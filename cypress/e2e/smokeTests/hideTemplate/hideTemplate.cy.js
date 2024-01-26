@@ -46,8 +46,9 @@ Then("card template hided successfully", () => {
 });
 
 after(() => {
+  cy.wait(6000);
   cy.get("@boardResponse").then((data) => {
     sharedDataUtils.deleteBoard(data.body.id);
-    cy.wait(6000);
+   
   });
 });
