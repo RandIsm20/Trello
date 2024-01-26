@@ -1,5 +1,4 @@
 
-
 Feature: Check update lists name functionality
 
 

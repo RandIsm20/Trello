@@ -1,26 +1,18 @@
-class addNewListActions{
+class addNewListActions {
+  clickOnAddAnotherListIcon() {
+    cy.get("[data-testid='list-composer-button']").click();
 
-clickOnAddAnotherListIcon() {
+    return this;
+  }
 
-cy.get("[data-testid='list-composer-button']").click();
+  typeTitleForTheList(listName) {
+    cy.get('[name="Enter list title…"]').clear().type(listName);
+  }
 
-return this;
-
-    }
-
-    typeTitleForTheList(listName){
-
-cy.get('[name="Enter list title…"]').clear().type(listName);
-
-    }
-
-clickOnAddListButton() {
-cy.get('[data-testid="list-composer-add-list-button"]').click();
-cy.wait(1000)
-return this;
-
-
-}
-
+  clickOnAddListButton() {
+    cy.get('[data-testid="list-composer-add-list-button"]').click();
+    cy.wait(1000);
+    return this;
+  }
 }
 export default addNewListActions;

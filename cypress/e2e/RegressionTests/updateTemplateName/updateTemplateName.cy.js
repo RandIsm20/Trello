@@ -1,16 +1,14 @@
 /// <reference types="cypress" />
 import SharedActions from "../../../pageObjects/shared/actions.cy";
 import SharedDataUtils from "../../../pageObjects/shared/dataUtils.cy";
-
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 import updateTempNameActions from "../../../pageObjects/updateTemplateName/actions.cy";
 import updateTemplateNameAssertions from "../../../pageObjects/updateTemplateName/assertions.cy";
 
-
 const sharedDataUtils = new SharedDataUtils();
 const sharedActions = new SharedActions();
 const updateTempNameAction = new updateTempNameActions();
-const updateTempNameAssertion=new updateTemplateNameAssertions();
+const updateTempNameAssertion = new updateTemplateNameAssertions();
 const boardName = "Rand Board" + Math.floor(Math.random() * 100);
 const newTempName = "QA";
 
@@ -27,41 +25,30 @@ beforeEach(() => {
   });
 });
 Given("navigate to the board page", () => {
-    cy.get("@boardResponse").then((data) => {
-      sharedActions.openBoard(data.body.url);
-    });
+  cy.get("@boardResponse").then((data) => {
+    sharedActions.openBoard(data.body.url);
   });
+});
 
+When("click on the card template name", () => {
+  sharedActions.clickOnCardTempName();
+});
 
-  When("click on the card template name",()=>{
+And("modify card template name", () => {
+  updateTempNameAction.modifyCardTempName(newTempName);
+});
 
-    sharedActions.clickOnCardTempName();
-  })
-
-  And("modify card template name",()=>{
-
-  updateTempNameAction.modifyCardTempName(newTempName)
-
-  })
-
-  And("click on close icon",()=>{
+And("click on close icon", () => {
   sharedActions.clickOnCloseIcon();
+});
 
-  })
+Then("the card template name updated successfully", () => {
+  updateTempNameAssertion.checkNewTempName(newTempName);
+});
 
-  Then("the card template name updated successfully",()=>{
-
-    updateTempNameAssertion.checkNewTempName(newTempName);
-
-    
-  })
-
-  after(()=>{
-   
-    cy.get("@boardResponse").then((data) => {
-       sharedDataUtils.deleteBoard(data.body.id);
-       cy.wait(6000);
-       }
-       )
-       })
-
+after(() => {
+  cy.get("@boardResponse").then((data) => {
+    sharedDataUtils.deleteBoard(data.body.id);
+    cy.wait(6000);
+  });
+});

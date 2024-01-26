@@ -5,7 +5,6 @@ class moveCardTemplateActions {
 
   selectListDestenation() {
     cy.get("[data-testid='move-card-popover-select-list-destination']").select(1);
- 
   }
 
   confirmMoveCard() {

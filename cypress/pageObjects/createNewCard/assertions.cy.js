@@ -1,8 +1,7 @@
 class createNewCardAssertions {
-    checkVisiblityOfTheCard() {
+  checkVisiblityOfTheCard() {
     cy.get('[data-testid ="card-name"]').should("be.visible");
+  }
+}
 
-    
-      }}
-  
-  export default createNewCardAssertions;
+export default createNewCardAssertions;

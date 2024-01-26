@@ -1,5 +1,4 @@
-/// <reference types="cypress" /> 
-
+/// <reference types="cypress" />
 
 import createNewCardActions from "../../../pageObjects/createNewCard/actions.cy";
 import createNewCardAssertions from "../../../pageObjects/createNewCard/assertions.cy";
@@ -10,59 +9,42 @@ import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 
 const sharedDataUtils = new SharedDataUtils();
 const sharedActions = new SharedActions();
-const createNewCardAction= new createNewCardActions();
+const createNewCardAction = new createNewCardActions();
 const createNewCardAssertion = new createNewCardAssertions();
-const  boardName= 'Rand Board'+Math.floor(Math.random()*100);
-const cardTitle="Rand Card";
+const boardName = "Rand Board" + Math.floor(Math.random() * 100);
+const cardTitle = "Rand Card";
 
-beforeEach(()=>{
-   
-  
-   cy.loginTrello();
+beforeEach(() => {
+  cy.loginTrello();
 
-     sharedDataUtils.createNewBoard(boardName).as('boardResponse');
-   
-   
-   
-   });
+  sharedDataUtils.createNewBoard(boardName).as("boardResponse");
+});
 
- Given("navigate to the board page",() => {
- 
-cy.get("@boardResponse").then((data) => {
- sharedActions.openBoard(data.body.url);
-})
+Given("navigate to the board page", () => {
+  cy.get("@boardResponse").then((data) => {
+    sharedActions.openBoard(data.body.url);
+  });
+});
 
- })
- 
-When("click on a add card plus icon",() => {
+When("click on a add card plus icon", () => {
+  createNewCardAction.clickOnAddCardIcon();
+});
 
-createNewCardAction.clickOnAddCardIcon();
-})
+When("type title for the card", () => {
+  createNewCardAction.typeTitleForTheCard(cardTitle);
+});
 
+When("click on add card button", () => {
+  createNewCardAction.clickOnAddCardButton();
+});
 
-When("type title for the card",()=>{
-   createNewCardAction.typeTitleForTheCard(cardTitle);
+Then("the card created successfully", () => {
+  createNewCardAssertion.checkVisiblityOfTheCard();
+});
 
-
-})
-
-When("click on add card button",()=>
-{
-   createNewCardAction.clickOnAddCardButton();
-   
-})
-
-Then("the card created successfully",()=>{
-   createNewCardAssertion.checkVisiblityOfTheCard();
-
-})
-
-after(()=>{
-   
-   cy.get("@boardResponse").then((data) => {
-   sharedDataUtils.deleteBoard(data.body.id);
-   cy.wait(6000);
-   }
-   )
-   })
- 
+after(() => {
+  cy.get("@boardResponse").then((data) => {
+    sharedDataUtils.deleteBoard(data.body.id);
+    cy.wait(6000);
+  });
+});

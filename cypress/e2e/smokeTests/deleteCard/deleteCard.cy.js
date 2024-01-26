@@ -10,7 +10,7 @@ import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 const sharedDataUtils = new SharedDataUtils();
 const sharedActions = new SharedActions();
 const deleteCardAction = new deleteCardActions();
-const deleteCardAssertion= new deleteCardAssertions();
+const deleteCardAssertion = new deleteCardAssertions();
 const boardName = "Rand Board" + Math.floor(Math.random() * 100);
 const cardTitle = "Rand Card";
 
@@ -34,34 +34,29 @@ Given("navigate to the board page", () => {
 });
 
 Given("click on card name", () => {
-deleteCardAction.clickOnCardName();
-  // cy.get('[data-testid ="card-name"]').should("not.be.visible");
+  deleteCardAction.clickOnCardName();
+ 
 });
 
 When("click on a Archive", () => {
-deleteCardAction.clickOnArchiveButton();
+  deleteCardAction.clickOnArchiveButton();
 });
 
 When("click on delete", () => {
- deleteCardAction.clickOnDeleteButton();
-
+  deleteCardAction.clickOnDeleteButton();
 });
 
 When("confirm delete card", () => {
- deleteCardAction.confirmDeleteCard();
+  deleteCardAction.confirmDeleteCard();
 });
 
- Then("the card deleted successfully",()=>{
+Then("the card deleted successfully", () => {
   deleteCardAssertion.checkCardisDeleted();
- 
+});
 
-})
-
-after(()=>{
-   
+after(() => {
   cy.get("@boardResponse").then((data) => {
-  sharedDataUtils.deleteBoard(data.body.id);
-  cy.wait(6000);
-  }
-  )
-  })
+    sharedDataUtils.deleteBoard(data.body.id);
+    cy.wait(6000);
+  });
+});
